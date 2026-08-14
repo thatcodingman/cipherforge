@@ -46,7 +46,7 @@ export default function Privacy() {
           <LegalH2>Contact</LegalH2>
           <LegalP>
             Questions about this policy can be sent to{" "}
-            <a href="mailto:pausedawg@gmail.com" style={{ color: C.accent }}>pausedawg@gmail.com</a>.
+            <a href="mailto:forgeaccounts@gmail.com" style={{ color: C.accent }}>pausedawg@gmail.com</a>.
           </LegalP>
         </div>
       </div>

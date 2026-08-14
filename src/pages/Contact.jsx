@@ -18,7 +18,7 @@ export default function Contact() {
             Bug report, feature idea, or something looks broken? Reach out any time.
           </LegalP>
           <LegalP>
-            <a href="mailto:pausedawg@gmail.com" style={{ color: C.accent }}>pausedawg@gmail.com</a>
+            <a href="mailto:forgeaccounts@gmail.com" style={{ color: C.accent }}>pausedawg@gmail.com</a>
           </LegalP>
           <LegalP>
             For privacy or data questions specifically, see the{" "}

@@ -1,10 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowLeft, Brain, Trophy, RefreshCw } from "lucide-react";
+import { ArrowLeft, Brain, Trophy, RefreshCw, Sparkles } from "lucide-react";
 import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence } from "../components/CipherChrome";
 
-// Small local wordlist for now — same idea as the Password Generator's
-// passphrase mode. Worth promoting to a shared export in CipherChrome if
-// both tools end up wanting the exact same list later.
 const WORDLIST = ["nebula","cipher","quartz","vortex","ember","glacier","onyx","zenith","tundra","phantom",
   "circuit","plasma","comet","raven","forge","binary","echo","crimson","frost","ion",
   "lunar","matrix","nova","orbit","pulse","quantum","rift","shadow","titan","umbra"];
@@ -15,9 +12,18 @@ function randomPhrase(wordCount) {
   return words.join("-");
 }
 
-// The ladder: each rung is a longer memory-hold delay. Reaching a rung
-// without a miss is the score — same "how far did you get" shape as Breach.
-const LADDER = [5, 10, 20, 35, 55, 80]; // seconds of delay before recall, per round
+const LADDER = [5, 10, 20, 35, 55, 80];
+const DISTRACTION_WINDOW_MS = 2500;
+
+function makeDistraction() {
+  const a = 2 + Math.floor(Math.random() * 9);
+  const b = 2 + Math.floor(Math.random() * 9);
+  const op = Math.random() < 0.5 ? "+" : "-";
+  const hi = Math.max(a, b), lo = Math.min(a, b);
+  const answer = op === "+" ? a + b : hi - lo;
+  const text = op === "+" ? a + " + " + b : hi + " - " + lo;
+  return { text: text, answer: answer };
+}
 
 const BEST_KEY = "passphrase-trainer-best-v1";
 function loadBest() {
@@ -37,19 +43,68 @@ export default function PassphraseTrainer() {
   const [countdown, setCountdown] = useState(0);
   const [best, setBest] = useState(loadBest);
   const [isNewBest, setIsNewBest] = useState(false);
+  const [focusScore, setFocusScore] = useState(0);
+  const [distraction, setDistraction] = useState(null); // { text, answer }
+  const [distractionInput, setDistractionInput] = useState("");
+  const [distractionFlash, setDistractionFlash] = useState(null); // "good" | "bad" | null
 
   const tickRef = useRef(null);
+  const distractionSpawnRef = useRef(null);
+  const distractionClearRef = useRef(null);
+  const inWaitingRef = useRef(false);
 
   useEffect(function () { document.title = "Passphrase Trainer — CipherForge"; }, []);
-  useEffect(function () { return function () { clearInterval(tickRef.current); }; }, []);
+  useEffect(function () {
+    return function () {
+      clearInterval(tickRef.current);
+      clearTimeout(distractionSpawnRef.current);
+      clearTimeout(distractionClearRef.current);
+    };
+  }, []);
+
+  function stopDistractions() {
+    inWaitingRef.current = false;
+    clearTimeout(distractionSpawnRef.current);
+    clearTimeout(distractionClearRef.current);
+    setDistraction(null);
+    setDistractionInput("");
+  }
+
+  function scheduleNextDistraction() {
+    if (!inWaitingRef.current) return;
+    const delay = 3000 + Math.random() * 3000;
+    distractionSpawnRef.current = setTimeout(function () {
+      if (!inWaitingRef.current) return;
+      setDistraction(makeDistraction());
+      setDistractionInput("");
+      distractionClearRef.current = setTimeout(function () {
+        setDistraction(null);
+        scheduleNextDistraction();
+      }, DISTRACTION_WINDOW_MS);
+    }, delay);
+  }
+
+  function submitDistraction(value) {
+    if (!distraction) return;
+    clearTimeout(distractionClearRef.current);
+    const correct = Number(value) === distraction.answer;
+    setDistractionFlash(correct ? "good" : "bad");
+    if (correct) setFocusScore(function (s) { return s + 5; });
+    setTimeout(function () { setDistractionFlash(null); }, 350);
+    setDistraction(null);
+    setDistractionInput("");
+    scheduleNextDistraction();
+  }
 
   function startRun() {
     setRound(0);
+    setFocusScore(0);
     beginRound(0);
   }
 
   function beginRound(roundIdx) {
-    const newPhrase = randomPhrase(3 + Math.min(roundIdx, 3)); // gets a little longer on later rungs
+    stopDistractions();
+    const newPhrase = randomPhrase(3 + Math.min(roundIdx, 3));
     setPhrase(newPhrase);
     setInput("");
     setPhase("reveal");
@@ -62,12 +117,19 @@ export default function PassphraseTrainer() {
         setCountdown(function (c) {
           if (c <= 1) {
             clearInterval(tickRef.current);
+            stopDistractions();
             setPhase("recall");
             return 0;
           }
           return c - 1;
         });
       }, 1000);
+
+      // Only bother with distractions on rounds long enough for them to fit.
+      if (LADDER[Math.min(roundIdx, LADDER.length - 1)] >= 8) {
+        inWaitingRef.current = true;
+        scheduleNextDistraction();
+      }
     }, 4000);
   }
 
@@ -96,7 +158,10 @@ export default function PassphraseTrainer() {
     <CipherBackdrop>
       <CipherFonts />
       <CipherFrameStyles />
-      <style>{"@keyframes ptFadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }"}</style>
+      <style>{"\
+        @keyframes ptFadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }\
+        @keyframes ptPopIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }\
+      "}</style>
       <div className="cf-frame" style={{
         background: C.bg, color: C.text, padding: "18px 16px", ...fontMono,
         border: "1px solid rgba(57,217,122,0.35)",
@@ -126,8 +191,11 @@ export default function PassphraseTrainer() {
               <p style={{ fontSize: 11.5, color: C.sub, lineHeight: 1.6, margin: "0 0 8px" }}>
                 You'll see a passphrase for a few seconds. It disappears. Then you wait — and type it back from memory when the timer runs out.
               </p>
+              <p style={{ fontSize: 11.5, color: C.sub, lineHeight: 1.6, margin: "0 0 8px" }}>
+                On longer waits, quick math challenges will pop up. They don't end your run if you miss them — but answering keeps you actively engaged instead of just repeating the phrase silently, and earns bonus Focus points.
+              </p>
               <p style={{ fontSize: 11.5, color: C.sub, lineHeight: 1.6, margin: "0 0 18px" }}>
-                Each round the wait gets longer. One wrong recall ends the run.
+                One wrong final recall ends the run.
               </p>
               {best > 0 && (
                 <p style={{ fontSize: 10.5, color: C.mute, margin: "0 0 16px" }}>Personal best: round {best}</p>
@@ -154,11 +222,34 @@ export default function PassphraseTrainer() {
 
           {phase === "waiting" && (
             <div style={{ textAlign: "center" }}>
-              <p style={{ fontSize: 10, color: C.mute, margin: "0 0 10px" }}>HOLD IT IN MEMORY</p>
-              <div style={{ background: C.card, border: "1px solid " + C.border, borderRadius: 8, padding: "30px 14px", marginBottom: 10 }}>
-                <p style={{ fontSize: 34, color: C.text, margin: 0, ...fontMono }}>{countdown}s</p>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                <span style={{ fontSize: 10, color: C.mute }}>ROUND {round + 1}</span>
+                <span style={{ fontSize: 10, color: C.mute }}>FOCUS <strong style={{ color: C.accent }}>{focusScore}</strong></span>
               </div>
-              <p style={{ fontSize: 10, color: C.mute }}>the phrase is hidden — recall prompt comes up automatically</p>
+
+              {distraction ? (
+                <div style={{
+                  background: distractionFlash === "good" ? C.accentDark : distractionFlash === "bad" ? "#3A1418" : C.card,
+                  border: "1px solid " + (distractionFlash === "good" ? C.accent : distractionFlash === "bad" ? C.danger : C.warn),
+                  borderRadius: 8, padding: "22px 14px", marginBottom: 10, animation: "ptPopIn 0.15s ease",
+                }}>
+                  <p style={{ fontSize: 9.5, color: C.mute, margin: "0 0 8px", letterSpacing: 0.5 }}>QUICK — SOLVE IT</p>
+                  <p style={{ fontSize: 22, color: C.text, margin: "0 0 12px" }}>{distraction.text} = ?</p>
+                  <input value={distractionInput} autoFocus
+                    onChange={function (e) { setDistractionInput(e.target.value.replace(/[^0-9]/g, "")); }}
+                    onKeyDown={function (e) { if (e.key === "Enter") submitDistraction(distractionInput); }}
+                    type="text" style={{
+                      width: 90, background: C.card2, border: "1px solid " + C.border, borderRadius: 6,
+                      color: C.text, fontSize: 16, padding: "6px 8px", textAlign: "center", ...fontMono }} />
+                </div>
+              ) : (
+                <div style={{ background: C.card, border: "1px solid " + C.border, borderRadius: 8, padding: "30px 14px", marginBottom: 10 }}>
+                  <p style={{ fontSize: 34, color: C.text, margin: 0, ...fontMono }}>{countdown}s</p>
+                </div>
+              )}
+              <p style={{ fontSize: 10, color: C.mute }}>
+                {distraction ? "answer earns bonus focus points" : "the phrase is hidden — hold it in memory"}
+              </p>
             </div>
           )}
 
@@ -174,8 +265,9 @@ export default function PassphraseTrainer() {
               {phase === "wrong" ? (
                 <div style={{ textAlign: "center" }}>
                   <p style={{ fontSize: 12, color: C.danger, margin: "0 0 4px" }}>Not quite. It was:</p>
-                  <p style={{ fontSize: 14, color: C.text, margin: "0 0 14px" }}>{phrase}</p>
-                  <p style={{ fontSize: 10.5, color: C.mute, margin: "0 0 14px" }}>You made it to round {round + 1}.</p>
+                  <p style={{ fontSize: 14, color: C.text, margin: "0 0 8px" }}>{phrase}</p>
+                  <p style={{ fontSize: 10.5, color: C.mute, margin: "0 0 4px" }}>You made it to round {round + 1}.</p>
+                  <p style={{ fontSize: 10.5, color: C.mute, margin: "0 0 14px" }}>Focus points earned: {focusScore}</p>
                   <button onClick={function () { setPhase("intro"); }} style={{
                     width: "100%", padding: "10px 0", borderRadius: 6, border: "none", background: C.accent,
                     color: "#020803", fontSize: 12, fontWeight: 700, cursor: "pointer", textTransform: "uppercase" }}>
@@ -202,13 +294,12 @@ export default function PassphraseTrainer() {
                   <span style={{ fontSize: 10, color: C.accent, letterSpacing: 0.5 }}>NEW BEST</span>
                 </div>
               )}
-              <p style={{ fontSize: 10, color: C.mute }}>next round loading...</p>
+              <p style={{ fontSize: 10, color: C.mute, display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}>
+                <Sparkles size={11} color={C.accent} /> focus {focusScore}
+              </p>
+              <p style={{ fontSize: 10, color: C.mute, marginTop: 8 }}>next round loading...</p>
             </div>
           )}
-
-          <p style={{ fontSize: 9, color: C.mute, textAlign: "center", marginTop: 20, lineHeight: 1.5 }}>
-            Groundwork v1 — a distraction task during the wait (instead of just staring at a timer) is planned next to make recall genuinely harder to fake.
-          </p>
         </div>
         )}
       </div>

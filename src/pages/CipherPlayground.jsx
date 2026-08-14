@@ -27,10 +27,20 @@ function fromHex(hex) {
 }
 
 function safeBase64Encode(str) {
-  try { return btoa(unescape(encodeURIComponent(str))); } catch (e) { return "ERROR: could not encode"; }
+  try {
+    const bytes = new TextEncoder().encode(str);
+    let binary = "";
+    bytes.forEach(function (b) { binary += String.fromCharCode(b); });
+    return btoa(binary);
+  } catch (e) { return "ERROR: could not encode"; }
 }
 function safeBase64Decode(str) {
-  try { return decodeURIComponent(escape(atob(str))); } catch (e) { return "ERROR: invalid Base64 input"; }
+  try {
+    const binary = atob(str);
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  } catch (e) { return "ERROR: invalid Base64 input"; }
 }
 
 const CIPHERS = {
