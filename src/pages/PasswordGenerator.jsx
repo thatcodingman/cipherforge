@@ -214,7 +214,7 @@ function GeneratorInner() {
           <div style={{ position: "relative", zIndex: 1 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
               <a href="/" style={{ color: C.sub, textDecoration: "none", fontSize: 11 }}>&lt; BACK</a>
-              <button onClick={function () { setShowSettings(!showSettings); }} style={{
+              <button onClick={function () { setShowSettings(!showSettings); }} aria-label="Appearance and length settings" style={{
                 background: showSettings ? C.accentDark : "none", border: "1px solid " + (showSettings ? C.accent : C.border),
                 color: showSettings ? C.accent : C.sub, borderRadius: 4, padding: "5px 8px", cursor: "pointer" }}>
                 <Settings size={13} />

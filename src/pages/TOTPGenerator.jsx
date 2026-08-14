@@ -197,7 +197,7 @@ function TOTPInner() {
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
             <span style={{ fontSize: 10, color: C.mute, flexShrink: 0 }}>SECRET</span>
             <span style={{ flex: 1, fontSize: 12, color: C.text, wordBreak: "break-all" }}>{secret}</span>
-            <button onClick={copySecret} style={{ background: "none", border: "none", color: C.sub, cursor: "pointer", flexShrink: 0 }}>
+            <button onClick={copySecret} aria-label="Copy secret key" style={{ background: "none", border: "none", color: C.sub, cursor: "pointer", flexShrink: 0 }}>
               {copiedSecret ? <Check size={13} color={C.accent} /> : <Copy size={13} />}
             </button>
           </div>

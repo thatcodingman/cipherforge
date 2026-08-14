@@ -8,6 +8,7 @@ import CipherPlayground from "./pages/CipherPlayground";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
+import NotFound from "./pages/NotFound";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 
@@ -15,6 +16,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="*" element={<NotFound />} />
         <Route path="/totp" element={<TOTPGenerator />} />
         <Route path="/memory" element={<PassphraseTrainer />} />
         <Route path="/breach" element={<Breach />} />
