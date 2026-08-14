@@ -1,6 +1,6 @@
 import { useState, useMemo, Component } from "react";
 import { ArrowLeft, Copy, Check } from "lucide-react";
-import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX } from "../components/CipherChrome";
+import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence } from "../components/CipherChrome";
 
 function caesarShift(str, shift) {
   return str.replace(/[a-zA-Z]/g, function (ch) {
@@ -64,6 +64,7 @@ class ErrorBoundary extends Component {
 }
 
 function PlaygroundInner() {
+  const [booted, setBooted] = useState(false);
   const [cipher, setCipher] = useState("caesar");
   const [mode, setMode] = useState("encode");
   const [input, setInput] = useState("");
@@ -109,7 +110,12 @@ function PlaygroundInner() {
         boxShadow: "0 0 40px rgba(57,217,122,0.07), inset 0 0 70px rgba(0,0,0,0.5)",
       }}>
         <FrameFX />
-        <div style={{ position: "relative", zIndex: 1 }}>
+        {!booted ? (
+          <BootSequence lines={["INITIALIZING CIPHER PLAYGROUND...", "LOADING CLASSICAL CIPHERS...", "READY."]}
+            onDone={function () { setBooted(true); }} />
+        ) : (
+        <div style={{ position: "relative", zIndex: 1, animation: "cpFadeUp 0.35s ease" }}>
+          <style>{"@keyframes cpFadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }"}</style>
           <a href="/" style={{ color: C.sub, textDecoration: "none", fontSize: 11, display: "inline-flex", alignItems: "center", gap: 5, marginBottom: 14 }}>
             <ArrowLeft size={13} /> BACK
           </a>
@@ -195,6 +201,7 @@ function PlaygroundInner() {
             These are classic/educational ciphers, not secure encryption. Don't use them to protect anything sensitive — for that, use the Password Generator.
           </p>
         </div>
+        )}
       </div>
     </CipherBackdrop>
   );
