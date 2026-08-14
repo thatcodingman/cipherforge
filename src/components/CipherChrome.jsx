@@ -168,3 +168,25 @@ export function BootSequence({ lines, onDone }) {
     </div>
   );
 }
+
+// Shared header + text helpers for the legal/info pages (About, Contact,
+// FAQ, Privacy, Terms) so each page file only has to hold its own content.
+export function LegalHeader({ title }) {
+  return (
+    <>
+      <a href="/" style={{ color: C.sub, textDecoration: "none", fontSize: 11, display: "inline-flex", alignItems: "center", gap: 5, marginBottom: 16 }}>
+        &lt; BACK
+      </a>
+      <div style={{ textAlign: "center", marginBottom: 20 }}>
+        <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 18, letterSpacing: 1.5, color: C.accent,
+          textShadow: "0 0 12px rgba(57,217,122,0.5)" }}>{title}</span>
+      </div>
+    </>
+  );
+}
+export function LegalP({ children }) {
+  return <p style={{ fontSize: 12.5, color: C.sub, lineHeight: 1.7, margin: "0 0 14px" }}>{children}</p>;
+}
+export function LegalH2({ children }) {
+  return <p style={{ fontSize: 13, fontWeight: 700, color: C.text, margin: "18px 0 6px", letterSpacing: 0.3 }}>{children}</p>;
+}
