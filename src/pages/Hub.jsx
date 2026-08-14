@@ -1,11 +1,7 @@
 import { useState, useEffect, Component } from "react";
-import { Key, Shuffle, Brain, Zap, ArrowRight } from "lucide-react";import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, Mascot, BootSequence } from "../components/CipherChrome";
+import { Key, Shuffle, Brain, Zap, QrCode, ArrowRight } from "lucide-react";
+import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, Mascot, BootSequence } from "../components/CipherChrome";
 
-// Every tile — including Breach — lives in this one list now, so every
-// single one gets identical hover animation (lift, glow, icon scale, arrow
-// slide). Breach previously lived as a separate hardcoded block below this
-// map with no hover handlers at all, so it was the one tile that didn't
-// react to being hovered.
 const ITEMS = [
   { key: "generator", icon: Key, title: "Password Generator", tag: "Free tool",
     desc: "Cryptographically secure passwords and a live strength scanner with real crack-time estimates.", href: "/generator" },
@@ -13,6 +9,8 @@ const ITEMS = [
     desc: "Caesar shift, ROT13, Base64, and XOR — encode and decode classic ciphers.", href: "/cipher" },
   { key: "memory", icon: Brain, title: "Memory Ladder", tag: "Free tool",
     desc: "Train your passphrase recall with an escalating memory-hold ladder and mid-wait focus challenges.", href: "/memory" },
+  { key: "totp", icon: QrCode, title: "QR / TOTP Generator", tag: "Free tool",
+    desc: "Generate a scannable 2FA QR code, plus verify the live 6-digit code right here before you commit to it.", href: "/totp" },
   { key: "breach", icon: Zap, title: "Breach", tag: "Game",
     desc: "Defend your system in real time. React fast, hold off the intrusion, see how long you survive.", href: "/breach", featured: true },
 ];
