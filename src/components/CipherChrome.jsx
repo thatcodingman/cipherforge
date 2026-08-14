@@ -25,11 +25,15 @@ export function CipherFrameStyles() {
       @media (max-width: 480px) {\
         .cf-backdrop { padding: 0 !important; }\
         .cf-frame { width: 100%; border-radius: 0; min-height: 100dvh; }\
+        .cf-corner-bracket { display: none; }\
       }\
       @keyframes cfNodePulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }\
       @keyframes cfFloat { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 0.7; } 90% { opacity: 0.4; } 100% { transform: translateY(-520px); opacity: 0; } }\
       @keyframes cfBlink { 50% { opacity: 0; } }\
       @keyframes cfBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }\
+      @media (prefers-reduced-motion: reduce) {\
+        .cf-frame, .cf-frame * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }\
+      }\
     "}</style>
   );
 }
@@ -100,10 +104,10 @@ export function CornerBrackets() {
   const style = { position: "absolute", width: 18, height: 18, opacity: 0.8 };
   return (
     <>
-      <div style={{ ...style, top: -1, left: -1, borderTop: "2px solid " + C.accent, borderLeft: "2px solid " + C.accent }} />
-      <div style={{ ...style, top: -1, right: -1, borderTop: "2px solid " + C.accent, borderRight: "2px solid " + C.accent }} />
-      <div style={{ ...style, bottom: -1, left: -1, borderBottom: "2px solid " + C.accent, borderLeft: "2px solid " + C.accent }} />
-      <div style={{ ...style, bottom: -1, right: -1, borderBottom: "2px solid " + C.accent, borderRight: "2px solid " + C.accent }} />
+      <div className="cf-corner-bracket" style={{ ...style, top: -1, left: -1, borderTop: "2px solid " + C.accent, borderLeft: "2px solid " + C.accent }} />
+      <div className="cf-corner-bracket" style={{ ...style, top: -1, right: -1, borderTop: "2px solid " + C.accent, borderRight: "2px solid " + C.accent }} />
+      <div className="cf-corner-bracket" style={{ ...style, bottom: -1, left: -1, borderBottom: "2px solid " + C.accent, borderLeft: "2px solid " + C.accent }} />
+      <div className="cf-corner-bracket" style={{ ...style, bottom: -1, right: -1, borderBottom: "2px solid " + C.accent, borderRight: "2px solid " + C.accent }} />
     </>
   );
 }

@@ -127,6 +127,13 @@ function HubInner() {
               Every tool here runs entirely in your browser. Nothing you generate, type, or scan is ever sent to a server.
             </p>
 
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, marginTop: 14 }}>
+              <a href="https://quickconverta.com" target="_blank" rel="noopener noreferrer"
+                style={{ fontSize: 11, color: C.accent, textDecoration: "none" }}>
+                Also check out QuickKit — free everyday utilities →
+              </a>
+            </div>
+
             <div style={{ display: "flex", justifyContent: "center", gap: 16, marginTop: 18, flexWrap: "wrap" }}>
               <a href="/privacy" style={{ fontSize: 10, color: C.mute, textDecoration: "none" }}>Privacy Policy</a>
               <a href="/about" style={{ fontSize: 10, color: C.mute, textDecoration: "none" }}>About</a>
