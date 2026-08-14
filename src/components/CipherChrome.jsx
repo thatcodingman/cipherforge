@@ -16,6 +16,12 @@ export function CipherFrameStyles() {
   return (
     <style>{"\
       .cf-frame { width: 390px; border-radius: 12px; box-sizing: border-box; position: relative; overflow: hidden; }\
+      @media (min-width: 700px) {\
+        .cf-frame { zoom: 1.25; }\
+      }\
+      @media (min-width: 1100px) {\
+        .cf-frame { zoom: 1.45; }\
+      }\
       @media (max-width: 480px) {\
         .cf-backdrop { padding: 0 !important; }\
         .cf-frame { width: 100%; border-radius: 0; min-height: 100dvh; }\

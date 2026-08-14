@@ -1,10 +1,14 @@
 import { useState, useEffect, Component } from "react";
-import { Key, ArrowRight } from "lucide-react";
+import { Key, Shuffle, ArrowRight } from "lucide-react";
 import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, Mascot, BootSequence } from "../components/CipherChrome";
 
+// Both tools now live in one list, so every tile gets the same hover
+// animation, icon treatment, and layout — no more one-off hardcoded tiles.
 const ITEMS = [
   { key: "generator", icon: Key, title: "Password Generator", tag: "Free tool",
     desc: "Cryptographically secure passwords and a live strength scanner with real crack-time estimates.", href: "/generator" },
+  { key: "cipher", icon: Shuffle, title: "Cipher Playground", tag: "Free tool",
+    desc: "Caesar shift, ROT13, Base64, and XOR — encode and decode classic ciphers.", href: "/cipher" },
 ];
 
 class ErrorBoundary extends Component {
@@ -100,43 +104,34 @@ function HubInner() {
                     <ArrowRight size={15} color={isHovered ? C.accent : C.mute} style={{
                       transform: isHovered ? "translateX(3px)" : "none", transition: "transform 0.2s ease" }} />
                   </div>
-                  <p style={{ fontSize: 11.5, color: C.sub, margin: "10px 0 0", lineHeight: 1.5 }}>{item.desc}</p>
+                  <p style={{ fontSize: 13, color: C.sub, margin: "10px 0 0", lineHeight: 1.55 }}>{item.desc}</p>
                 </a>
               );
             })}
 
-            <a href="/cipher" style={{
+            <a href="/breach" style={{
               display: "block", textDecoration: "none", color: "inherit",
-              background: C.card, border: "1px solid " + C.border, borderRadius: 8,
-              padding: "16px 16px", marginBottom: 12,
+              background: "linear-gradient(135deg, " + C.accentDark + ", " + C.card + ")",
+              border: "1px solid " + C.accent, borderRadius: 8, padding: "16px 16px", marginBottom: 4,
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{ width: 40, height: 40, borderRadius: 6, background: C.accentDark,
                   display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  <span style={{ fontSize: 16 }}>⌬</span>
+                  <span style={{ fontSize: 17 }}>⚡</span>
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: 0.3 }}>Cipher Playground</span>
-                    <span style={{ fontSize: 9, color: C.mute, textTransform: "uppercase",
-                      letterSpacing: 0.5, border: "1px solid " + C.border, borderRadius: 4, padding: "1px 5px" }}>Free tool</span>
+                    <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: 0.3 }}>Breach</span>
+                    <span style={{ fontSize: 9, color: C.accent, textTransform: "uppercase",
+                      letterSpacing: 0.5, border: "1px solid " + C.accent, borderRadius: 4, padding: "1px 5px" }}>Game</span>
                   </div>
                 </div>
-                <ArrowRight size={15} color={C.mute} />
+                <ArrowRight size={15} color={C.accent} />
               </div>
-              <p style={{ fontSize: 11.5, color: C.sub, margin: "10px 0 0", lineHeight: 1.5 }}>
-                Caesar shift, ROT13, Base64, and XOR — encode and decode classic ciphers.
+              <p style={{ fontSize: 13, color: C.sub, margin: "10px 0 0", lineHeight: 1.55 }}>
+                Defend your system in real time. React fast, hold off the intrusion, see how long you survive.
               </p>
             </a>
-
-            <div style={{
-              border: "1px dashed " + C.border, borderRadius: 8, padding: "14px 16px", marginTop: 4,
-              textAlign: "center",
-            }}>
-              <p style={{ fontSize: 10.5, color: C.mute, margin: 0, letterSpacing: 0.5 }}>
-                &gt; MORE MODULES COMPILING...
-              </p>
-            </div>
 
             <p style={{ fontSize: 9.5, color: C.mute, textAlign: "center", marginTop: 22, lineHeight: 1.6 }}>
               Every tool here runs entirely in your browser. Nothing you generate, type, or scan is ever sent to a server.
