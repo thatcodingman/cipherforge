@@ -73,15 +73,20 @@ export function CipherBackdrop({ children }) {
   );
 }
 
-// A repeating dot-grid pattern instead of fixed-position SVG lines — this
-// tiles infinitely and can never stretch/distort regardless of how tall the
-// page gets, unlike the old approach which broke as more tools were added.
+// Soft, non-repeating glow spots instead of a tiled/repeating pattern — a
+// repeating background combined with the desktop `zoom` scaling below can
+// produce faint seam lines in some browsers (WebKit especially) when the
+// tile size doesn't divide evenly into the zoomed dimensions. Non-repeating
+// gradients have no tile boundary, so this class of bug can't happen here.
 export function CircuitBackground() {
   return (
     <div style={{
-      position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.18,
-      backgroundImage: "radial-gradient(circle, " + C.accent + " 1px, transparent 1px)",
-      backgroundSize: "26px 26px",
+      position: "absolute", inset: 0, pointerEvents: "none",
+      backgroundImage:
+        "radial-gradient(circle at 15% 15%, " + C.accent + "26 0%, transparent 38%), " +
+        "radial-gradient(circle at 85% 12%, " + C.accent + "1f 0%, transparent 34%), " +
+        "radial-gradient(circle at 18% 88%, " + C.accent + "1f 0%, transparent 34%), " +
+        "radial-gradient(circle at 82% 85%, " + C.accent + "26 0%, transparent 38%)",
     }} />
   );
 }
