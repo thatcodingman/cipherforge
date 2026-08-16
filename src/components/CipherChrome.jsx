@@ -11,6 +11,22 @@ export function CipherFonts() {
   return <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@600;700&display=swap" />;
 }
 
+// Structured data so search engines understand this is a free web app, not
+// just a page of text — can surface richer results ("Free" badge, etc).
+export function CipherStructuredData() {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CipherForge",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Any (runs in browser)",
+    "url": "https://getcipherforge.com",
+    "description": "Free browser-only security tools: a password generator with crack-time analysis, a classic cipher playground, a QR/TOTP 2FA generator, a passphrase memory trainer, and a defense game.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  };
+  return <script type="application/ld+json">{JSON.stringify(data)}</script>;
+}
+
 // Shared CSS for the frame + shared keyframes. Include once per page via <CipherFrameStyles />.
 export function CipherFrameStyles() {
   return (
@@ -34,6 +50,10 @@ export function CipherFrameStyles() {
       @media (prefers-reduced-motion: reduce) {\
         .cf-frame, .cf-frame * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }\
       }\
+      .cf-frame a:focus-visible, .cf-frame button:focus-visible, .cf-frame input:focus-visible, .cf-frame select:focus-visible {\
+        outline: 2px solid #39D97A;\
+        outline-offset: 2px;\
+      }\
     "}</style>
   );
 }
@@ -53,29 +73,16 @@ export function CipherBackdrop({ children }) {
   );
 }
 
+// A repeating dot-grid pattern instead of fixed-position SVG lines — this
+// tiles infinitely and can never stretch/distort regardless of how tall the
+// page gets, unlike the old approach which broke as more tools were added.
 export function CircuitBackground() {
-  const nodes = [
-    { x: 40, y: 60, delay: 0 }, { x: 340, y: 90, delay: 0.6 }, { x: 90, y: 220, delay: 1.2 },
-    { x: 300, y: 260, delay: 0.3 }, { x: 60, y: 380, delay: 0.9 }, { x: 330, y: 420, delay: 1.5 },
-  ];
   return (
-    <svg viewBox="0 0 390 500" preserveAspectRatio="none"
-      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", opacity: 0.35 }}>
-      <g stroke={C.accent} strokeWidth="0.6" fill="none" opacity="0.5">
-        <path d="M40,60 L40,140 L120,140" />
-        <path d="M340,90 L260,90 L260,180" />
-        <path d="M90,220 L90,300 L200,300 L200,340" />
-        <path d="M300,260 L340,260 L340,340" />
-        <path d="M60,380 L150,380" />
-        <path d="M330,420 L250,420 L250,460" />
-      </g>
-      {nodes.map(function (n, i) {
-        return (
-          <circle key={i} cx={n.x} cy={n.y} r="2.5" fill={C.accent}
-            style={{ animation: "cfNodePulse 2.4s ease-in-out " + n.delay + "s infinite" }} />
-        );
-      })}
-    </svg>
+    <div style={{
+      position: "absolute", inset: 0, pointerEvents: "none", opacity: 0.18,
+      backgroundImage: "radial-gradient(circle, " + C.accent + " 1px, transparent 1px)",
+      backgroundSize: "26px 26px",
+    }} />
   );
 }
 

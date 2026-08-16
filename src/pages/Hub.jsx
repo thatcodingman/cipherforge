@@ -1,7 +1,6 @@
 import { useState, useEffect, Component } from "react";
 import { Key, Shuffle, Brain, Zap, QrCode, ArrowRight } from "lucide-react";
-import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, Mascot, BootSequence } from "../components/CipherChrome";
-
+import { C, fontMono, CipherFonts, CipherStructuredData, CipherFrameStyles, CipherBackdrop, FrameFX, Mascot, BootSequence } from "../components/CipherChrome";
 const ITEMS = [
   { key: "generator", icon: Key, title: "Password Generator", tag: "Free tool",
     desc: "Cryptographically secure passwords and a live strength scanner with real crack-time estimates.", href: "/generator" },
@@ -43,10 +42,10 @@ function HubInner() {
   const [hovered, setHovered] = useState(null);
 
   useEffect(function () { document.title = "CipherForge — Security Tools"; }, []);
-
   return (
     <CipherBackdrop>
       <CipherFonts />
+      <CipherStructuredData />
       <CipherFrameStyles />
       <div className="cf-frame" style={{
         background: C.bg, color: C.text, padding: "24px 20px",
