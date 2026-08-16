@@ -54,6 +54,10 @@ export function CipherFrameStyles() {
         outline: 2px solid #39D97A;\
         outline-offset: 2px;\
       }\
+      .cf-frame { -webkit-user-select: none; user-select: none; }\
+      .cf-frame input, .cf-frame textarea, .cf-frame select {\
+        -webkit-user-select: text; user-select: text;\
+      }\
     "}</style>
   );
 }
