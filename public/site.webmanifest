@@ -1,0 +1,27 @@
+{
+  "name": "CipherForge",
+  "short_name": "CipherForge",
+  "description": "Free, browser-only security tools — password generation, ciphers, TOTP/QR, passphrase training, and reflex defense.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0e0c",
+  "theme_color": "#39D97A",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/maskable-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
