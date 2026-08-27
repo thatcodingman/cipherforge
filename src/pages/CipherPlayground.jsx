@@ -1,6 +1,19 @@
 import { useState, useMemo, Component } from "react";
 import { ArrowLeft, Copy, Check } from "lucide-react";
 import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence } from "../components/CipherChrome";
+import StructuredData from "../components/StructuredData";
+
+const cipherPlaygroundSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "CipherForge Cipher Playground",
+  "url": "https://getcipherforge.com/cipher",
+  "description": "Free browser-only classic cipher tool supporting Caesar shift, ROT13, Base64, and XOR encoding/decoding, entirely client-side.",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+};
 
 function caesarShift(str, shift) {
   return str.replace(/[a-zA-Z]/g, function (ch) {
@@ -112,6 +125,7 @@ function PlaygroundInner() {
 
   return (
     <CipherBackdrop>
+      <StructuredData data={cipherPlaygroundSchema} />
       <CipherFonts />
       <CipherFrameStyles />
       <div className="cf-frame" style={{

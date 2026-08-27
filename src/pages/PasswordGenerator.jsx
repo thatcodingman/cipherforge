@@ -1,6 +1,19 @@
 import { useState, useEffect, useRef, useMemo, Component } from "react";
 import { Copy, Check, RefreshCw, Settings, X, Zap } from "lucide-react";
 import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence } from "../components/CipherChrome";
+import StructuredData from "../components/StructuredData";
+
+const passwordGeneratorSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "CipherForge Password Generator",
+  "url": "https://getcipherforge.com/generator",
+  "description": "Free browser-only password generator using crypto.getRandomValues, with passphrase and random modes and real crack-time analysis across four attacker tiers.",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+};
 
 const CHARSETS = {
   lower: "abcdefghijklmnopqrstuvwxyz",
@@ -199,6 +212,7 @@ function GeneratorInner() {
 
   return (
     <CipherBackdrop>
+      <StructuredData data={passwordGeneratorSchema} />
       <CipherFonts />
       <CipherFrameStyles />
       <div className="cf-frame" style={{

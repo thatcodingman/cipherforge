@@ -1,6 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Brain, Trophy, RefreshCw, Sparkles } from "lucide-react";
 import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence } from "../components/CipherChrome";
+import StructuredData from "../components/StructuredData";
+
+const passphraseTrainerSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "CipherForge Passphrase Trainer",
+  "url": "https://getcipherforge.com/memory",
+  "description": "Free memory training tool for passphrases, using an escalating recall-delay ladder with mid-wait math distraction challenges.",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+};
 
 const WORDLIST = ["nebula","cipher","quartz","vortex","ember","glacier","onyx","zenith","tundra","phantom",
   "circuit","plasma","comet","raven","forge","binary","echo","crimson","frost","ion",
@@ -156,6 +169,7 @@ export default function PassphraseTrainer() {
 
   return (
     <CipherBackdrop>
+      <StructuredData data={passphraseTrainerSchema} />
       <CipherFonts />
       <CipherFrameStyles />
       <style>{"\

@@ -2,6 +2,19 @@ import { useState, useEffect, Component } from "react";
 import QRCode from "qrcode";
 import { ArrowLeft, Copy, Check, RefreshCw } from "lucide-react";
 import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence } from "../components/CipherChrome";
+import StructuredData from "../components/StructuredData";
+
+const totpGeneratorSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "CipherForge QR/TOTP Generator",
+  "url": "https://getcipherforge.com/totp",
+  "description": "Free RFC 6238-compliant TOTP 2FA code generator with QR code output for authenticator apps, using crypto.getRandomValues for secret generation.",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+};
 
 const BASE32_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 const PERIOD = 30;
@@ -142,6 +155,7 @@ function TOTPInner() {
 
   return (
     <CipherBackdrop>
+      <StructuredData data={totpGeneratorSchema} />
       <CipherFonts />
       <CipherFrameStyles />
       <style>{"@keyframes qrPopIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }"}</style>

@@ -1,6 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Zap, Shield, Trophy } from "lucide-react";
 import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence } from "../components/CipherChrome";
+import StructuredData from "../components/StructuredData";
+
+const breachGameSchema = {
+  "@context": "https://schema.org",
+  "@type": "Game",
+  "name": "Breach",
+  "url": "https://getcipherforge.com/breach",
+  "description": "Free browser-based reflex and defense game with 4 difficulty tiers and personal-best tracking, part of the CipherForge security toolkit.",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+};
 
 const TIERS = [
   { label: "Bored hacker's laptop", drip: 2.2, spawnMin: 1300, spawnMax: 1800, window: 1500, hitRelief: 5, missPenalty: 7,
@@ -189,6 +202,7 @@ export default function Breach() {
 
   return (
     <CipherBackdrop>
+      <StructuredData data={breachGameSchema} />
       <CipherFonts />
       <CipherFrameStyles />
       <style>{"\
