@@ -43,6 +43,10 @@ export function CipherFrameStyles() {
         .cf-frame { width: 100%; border-radius: 0; min-height: 100dvh; }\
         .cf-corner-bracket { display: none; }\
       }\
+      .cf-frame {\
+        border: 1px solid rgba(57,217,122,0.15) !important;\
+        box-shadow: 0 0 120px 40px rgba(57,217,122,0.05), 0 0 40px rgba(57,217,122,0.05), inset 0 0 70px rgba(0,0,0,0.5) !important;\
+      }\
       @keyframes cfNodePulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }\
       @keyframes cfFloat { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 0.7; } 90% { opacity: 0.4; } 100% { transform: translateY(-520px); opacity: 0; } }\
       @keyframes cfBlink { 50% { opacity: 0; } }\
@@ -70,7 +74,9 @@ export function CipherBackdrop({ children }) {
   return (
     <div className="cf-backdrop" style={{
       display: "flex", justifyContent: "center", alignItems: "center",
-      minHeight: "100dvh", background: "#000", padding: "16px 0",
+      minHeight: "100dvh",
+      background: "radial-gradient(circle at 50% 40%, #04140A 0%, #000000 65%)",
+      padding: "16px 0",
     }}>
       {children}
     </div>
