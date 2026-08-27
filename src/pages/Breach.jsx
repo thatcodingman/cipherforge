@@ -5,11 +5,11 @@ import StructuredData from "../components/StructuredData";
 
 const breachGameSchema = {
   "@context": "https://schema.org",
-  "@type": "Game",
+  "@type": "SoftwareApplication",
   "name": "Breach",
   "url": "https://getcipherforge.com/breach",
   "description": "Free browser-based reflex and defense game with 4 difficulty tiers and personal-best tracking, part of the CipherForge security toolkit.",
-  "applicationCategory": "Game",
+  "applicationCategory": "GameApplication",
   "operatingSystem": "Any (Web Browser)",
   "isAccessibleForFree": true,
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
