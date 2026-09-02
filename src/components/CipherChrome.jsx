@@ -46,6 +46,7 @@ export function CipherFrameStyles() {
       .cf-frame {\
         border: 1px solid #000000 !important;\
         box-shadow: none !important;\
+        background: #000000 !important;\
       }\
       @keyframes cfNodePulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }\
       @keyframes cfFloat { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 0.7; } 90% { opacity: 0.4; } 100% { transform: translateY(-520px); opacity: 0; } }\
