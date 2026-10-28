@@ -1,7 +1,7 @@
 import { useState, useEffect, Component } from "react";
 import QRCode from "qrcode";
 import { ArrowLeft, Copy, Check, RefreshCw } from "lucide-react";
-import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence } from "../components/CipherChrome";
+import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta } from "../components/CipherChrome";
 import StructuredData from "../components/StructuredData";
 
 const totpGeneratorSchema = {
@@ -105,8 +105,6 @@ function TOTPInner() {
   const [copiedUri, setCopiedUri] = useState(false);
   const [qrReady, setQrReady] = useState(false);
 
-  useEffect(function () { document.title = "QR / TOTP Generator — CipherForge"; }, []);
-
   const otpauthUri = "otpauth://totp/" + encodeURIComponent(issuer + ":" + account) +
     "?secret=" + secret + "&issuer=" + encodeURIComponent(issuer) +
     "&algorithm=SHA1&digits=" + DIGITS + "&period=" + PERIOD;
@@ -155,6 +153,11 @@ function TOTPInner() {
 
   return (
     <CipherBackdrop>
+      <PageMeta
+        title="QR / TOTP Generator — 2FA Codes | CipherForge"
+        description="Free RFC 6238-compliant TOTP 2FA code generator with a scannable QR code for authenticator apps. Verify the live 6-digit code before you commit — entirely client-side."
+        path="/totp"
+      />
       <StructuredData data={totpGeneratorSchema} />
       <CipherFonts />
       <CipherFrameStyles />
@@ -175,8 +178,8 @@ function TOTPInner() {
           </a>
 
           <div style={{ textAlign: "center", marginBottom: 4 }}>
-            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 18, letterSpacing: 1.5, color: C.accent,
-              textShadow: "0 0 12px rgba(57,217,122,0.5)" }}>QR / TOTP GENERATOR</span>
+            <h1 style={{ margin: 0, fontFamily: "'Orbitron', sans-serif", fontSize: 18, fontWeight: 600, letterSpacing: 1.5, color: C.accent,
+              textShadow: "0 0 12px rgba(57,217,122,0.5)" }}>QR / TOTP GENERATOR</h1>
           </div>
           <p style={{ fontSize: 10, color: C.mute, textAlign: "center", margin: "2px 0 18px", letterSpacing: 0.5 }}>
             SCAN IT — OR VERIFY IT RIGHT HERE FIRST

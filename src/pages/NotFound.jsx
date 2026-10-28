@@ -1,9 +1,15 @@
 import { AlertTriangle } from "lucide-react";
-import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX } from "../components/CipherChrome";
+import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, PageMeta } from "../components/CipherChrome";
 
 export default function NotFound() {
   return (
     <CipherBackdrop>
+      <PageMeta
+        title="404 — Page Not Found | CipherForge"
+        description="This page doesn't exist on CipherForge."
+        path={typeof window !== "undefined" ? window.location.pathname : "/404"}
+        noindex
+      />
       <CipherFonts />
       <CipherFrameStyles />
       <div className="cf-frame" style={{
@@ -14,8 +20,8 @@ export default function NotFound() {
         <FrameFX />
         <div style={{ position: "relative", zIndex: 1 }}>
           <AlertTriangle size={30} color={C.warn} style={{ margin: "10px 0 16px" }} />
-          <p style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 18, letterSpacing: 1.5, color: C.accent,
-            margin: "0 0 8px" }}>404 — MODULE NOT FOUND</p>
+          <h1 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 18, fontWeight: 600, letterSpacing: 1.5, color: C.accent,
+            margin: "0 0 8px" }}>404 — MODULE NOT FOUND</h1>
           <p style={{ fontSize: 12, color: C.sub, lineHeight: 1.6, margin: "0 0 24px" }}>
             That path doesn't map to anything in the registry.
           </p>

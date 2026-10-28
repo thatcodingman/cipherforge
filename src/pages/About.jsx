@@ -1,8 +1,13 @@
-import { C, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, LegalHeader, LegalP, LegalH2 } from "../components/CipherChrome";
+import { C, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, LegalHeader, LegalP, LegalH2, PageMeta } from "../components/CipherChrome";
 
 export default function About() {
   return (
     <CipherBackdrop>
+      <PageMeta
+        title="About | CipherForge"
+        description="CipherForge is a set of free, browser-only security tools — a password generator, cipher playground, passphrase trainer, TOTP generator, and defense game. No signup, nothing leaves your browser."
+        path="/about"
+      />
       <CipherFonts />
       <CipherFrameStyles />
       <div className="cf-frame" style={{

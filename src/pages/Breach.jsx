@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Zap, Shield, Trophy } from "lucide-react";
-import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence } from "../components/CipherChrome";
+import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta } from "../components/CipherChrome";
 import StructuredData from "../components/StructuredData";
 
 const breachGameSchema = {
@@ -87,8 +87,6 @@ export default function Breach() {
   const startRef = useRef(0);
   const lastSpotRef = useRef(-1);
   const progressRef = useRef(0);
-
-  useEffect(function () { document.title = "Breach — CipherForge"; }, []);
 
   function clearAllTimers() {
     clearTimeout(spawnTimeoutRef.current);
@@ -202,6 +200,11 @@ export default function Breach() {
 
   return (
     <CipherBackdrop>
+      <PageMeta
+        title="Breach — Reflex Defense Game | CipherForge"
+        description="Free browser-based reflex and defense game. React fast, hold off the intrusion, and see how long you survive across 4 difficulty tiers. Personal-best tracking, no signup."
+        path="/breach"
+      />
       <StructuredData data={breachGameSchema} />
       <CipherFonts />
       <CipherFrameStyles />
@@ -229,8 +232,8 @@ export default function Breach() {
           </a>
 
           <div style={{ textAlign: "center", marginBottom: 4 }}>
-            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 22, letterSpacing: 2, color: C.accent,
-              textShadow: "0 0 12px rgba(57,217,122,0.5)" }}>BREACH</span>
+            <h1 style={{ margin: 0, fontFamily: "'Orbitron', sans-serif", fontSize: 22, fontWeight: 600, letterSpacing: 2, color: C.accent,
+              textShadow: "0 0 12px rgba(57,217,122,0.5)" }}>BREACH</h1>
           </div>
 
           {phase === "select" && (

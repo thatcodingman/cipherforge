@@ -27,6 +27,53 @@ export function CipherStructuredData() {
   return <script type="application/ld+json">{JSON.stringify(data)}</script>;
 }
 
+// Per-page SEO metadata. This is an SPA (no server-side rendering), so
+// index.html only ever ships one static <title>/description/canonical/OG
+// set. Without this, every route — /cipher, /privacy, /totp, etc. — shows
+// the exact same title and description in search results and link
+// previews, which reads as duplicate/thin content to search engines.
+// Dropping <PageMeta title=... description=... path="/route" /> at the top
+// of a page updates title, meta description, OG/Twitter tags, and adds a
+// correct canonical link for that specific route. Google's crawler does
+// execute JS and read these updates, so this is sufficient without adding
+// a routing/SSR library.
+const SITE = "https://getcipherforge.com";
+function setMeta(selector, attr, value) {
+  const el = document.querySelector(selector);
+  if (el) el.setAttribute(attr, value);
+}
+export function PageMeta({ title, description, path, noindex }) {
+  useEffect(function () {
+    document.title = title;
+    setMeta('meta[name="description"]', "content", description);
+    setMeta('meta[property="og:title"]', "content", title);
+    setMeta('meta[property="og:description"]', "content", description);
+    setMeta('meta[property="og:url"]', "content", SITE + path);
+    setMeta('meta[name="twitter:title"]', "content", title);
+    setMeta('meta[name="twitter:description"]', "content", description);
+
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", SITE + path);
+
+    // Explicitly reset robots on every page (not just set it on 404) — this
+    // is a client-side-routed SPA, so a stale noindex from a previous route
+    // in the same session would otherwise silently persist.
+    let robots = document.querySelector('meta[name="robots"]');
+    if (!robots) {
+      robots = document.createElement("meta");
+      robots.setAttribute("name", "robots");
+      document.head.appendChild(robots);
+    }
+    robots.setAttribute("content", noindex ? "noindex, nofollow" : "index, follow");
+  }, [title, description, path, noindex]);
+  return null;
+}
+
 // Shared CSS for the frame + shared keyframes. Include once per page via <CipherFrameStyles />.
 export function CipherFrameStyles() {
   return (
@@ -197,6 +244,9 @@ export function BootSequence({ lines, onDone }) {
 
 // Shared header + text helpers for the legal/info pages (About, Contact,
 // FAQ, Privacy, Terms) so each page file only has to hold its own content.
+// title renders as a real <h1> (was a styled <span> — invisible to search
+// engines as a heading) with margin zeroed out so it doesn't inherit the
+// global h1 sizing/spacing from index.css.
 export function LegalHeader({ title }) {
   return (
     <>
@@ -204,8 +254,8 @@ export function LegalHeader({ title }) {
         &lt; BACK
       </a>
       <div style={{ textAlign: "center", marginBottom: 20 }}>
-        <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 18, letterSpacing: 1.5, color: C.accent,
-          textShadow: "0 0 12px rgba(57,217,122,0.5)" }}>{title}</span>
+        <h1 style={{ margin: 0, fontFamily: "'Orbitron', sans-serif", fontSize: 18, fontWeight: 600, letterSpacing: 1.5, color: C.accent,
+          textShadow: "0 0 12px rgba(57,217,122,0.5)" }}>{title}</h1>
       </div>
     </>
   );
@@ -214,5 +264,5 @@ export function LegalP({ children }) {
   return <p style={{ fontSize: 12.5, color: C.sub, lineHeight: 1.7, margin: "0 0 14px" }}>{children}</p>;
 }
 export function LegalH2({ children }) {
-  return <p style={{ fontSize: 13, fontWeight: 700, color: C.text, margin: "18px 0 6px", letterSpacing: 0.3 }}>{children}</p>;
+  return <h2 style={{ fontSize: 13, fontWeight: 700, color: C.text, margin: "18px 0 6px", letterSpacing: 0.3 }}>{children}</h2>;
 }

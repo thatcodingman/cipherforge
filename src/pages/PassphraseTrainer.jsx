@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Brain, Trophy, RefreshCw, Sparkles } from "lucide-react";
-import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence } from "../components/CipherChrome";
+import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta } from "../components/CipherChrome";
 import StructuredData from "../components/StructuredData";
 
 const passphraseTrainerSchema = {
@@ -66,7 +66,6 @@ export default function PassphraseTrainer() {
   const distractionClearRef = useRef(null);
   const inWaitingRef = useRef(false);
 
-  useEffect(function () { document.title = "Passphrase Trainer — CipherForge"; }, []);
   useEffect(function () {
     return function () {
       clearInterval(tickRef.current);
@@ -169,6 +168,11 @@ export default function PassphraseTrainer() {
 
   return (
     <CipherBackdrop>
+      <PageMeta
+        title="Memory Ladder — Passphrase Recall Trainer | CipherForge"
+        description="Free passphrase memory trainer. An escalating recall-delay ladder with mid-wait math distraction challenges to train real passphrase recall, entirely in your browser."
+        path="/memory"
+      />
       <StructuredData data={passphraseTrainerSchema} />
       <CipherFonts />
       <CipherFrameStyles />
@@ -192,8 +196,8 @@ export default function PassphraseTrainer() {
           </a>
 
           <div style={{ textAlign: "center", marginBottom: 4 }}>
-            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 19, letterSpacing: 1.5, color: C.accent,
-              textShadow: "0 0 12px rgba(57,217,122,0.5)" }}>MEMORY LADDER</span>
+            <h1 style={{ margin: 0, fontFamily: "'Orbitron', sans-serif", fontSize: 19, fontWeight: 600, letterSpacing: 1.5, color: C.accent,
+              textShadow: "0 0 12px rgba(57,217,122,0.5)" }}>MEMORY LADDER</h1>
           </div>
           <p style={{ fontSize: 10, color: C.mute, textAlign: "center", margin: "2px 0 20px", letterSpacing: 0.5 }}>
             PASSPHRASE RECALL TRAINER

@@ -1,6 +1,6 @@
 import { useState, useMemo, Component } from "react";
 import { ArrowLeft, Copy, Check } from "lucide-react";
-import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence } from "../components/CipherChrome";
+import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta } from "../components/CipherChrome";
 import StructuredData from "../components/StructuredData";
 
 const cipherPlaygroundSchema = {
@@ -125,6 +125,11 @@ function PlaygroundInner() {
 
   return (
     <CipherBackdrop>
+      <PageMeta
+        title="Cipher Playground — Caesar, ROT13, Base64, XOR | CipherForge"
+        description="Free browser-only classic cipher tool. Encode and decode Caesar shift, ROT13, Base64, and XOR ciphers instantly, entirely client-side — nothing is sent to a server."
+        path="/cipher"
+      />
       <StructuredData data={cipherPlaygroundSchema} />
       <CipherFonts />
       <CipherFrameStyles />
@@ -145,8 +150,8 @@ function PlaygroundInner() {
           </a>
 
           <div style={{ textAlign: "center", marginBottom: 4 }}>
-            <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 19, letterSpacing: 1.5, color: C.accent,
-              textShadow: "0 0 12px rgba(57,217,122,0.5)" }}>CIPHER PLAYGROUND</span>
+            <h1 style={{ margin: 0, fontFamily: "'Orbitron', sans-serif", fontSize: 19, fontWeight: 600, letterSpacing: 1.5, color: C.accent,
+              textShadow: "0 0 12px rgba(57,217,122,0.5)" }}>CIPHER PLAYGROUND</h1>
           </div>
           <p style={{ fontSize: 10, color: C.mute, textAlign: "center", margin: "2px 0 18px", letterSpacing: 0.5 }}>
             CLASSIC ENCODING // DECODING SANDBOX

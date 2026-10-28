@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo, Component } from "react";
 import { Copy, Check, RefreshCw, Settings, X, Zap } from "lucide-react";
-import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence } from "../components/CipherChrome";
+import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta } from "../components/CipherChrome";
 import StructuredData from "../components/StructuredData";
 
 const passwordGeneratorSchema = {
@@ -179,8 +179,6 @@ function GeneratorInner() {
   const [checkInput, setCheckInput] = useState("");
   const [attackerIdx, setAttackerIdx] = useState(1);
 
-  useEffect(function () { document.title = "Password Generator — CipherForge"; }, []);
-
   const opts = { mode: mode, length: length, wordCount: wordCount, separator: separator,
     lower: lower, upper: upper, numbers: numbers, symbols: symbols, excludeAmbiguous: excludeAmbiguous };
 
@@ -212,6 +210,11 @@ function GeneratorInner() {
 
   return (
     <CipherBackdrop>
+      <PageMeta
+        title="Password Generator — Secure & Private | CipherForge"
+        description="Free browser-only password generator using crypto.getRandomValues (not Math.random). Passphrase and random modes, plus a strength scanner with real crack-time estimates across four attacker tiers."
+        path="/generator"
+      />
       <StructuredData data={passwordGeneratorSchema} />
       <CipherFonts />
       <CipherFrameStyles />
@@ -236,8 +239,8 @@ function GeneratorInner() {
             </div>
 
             <div style={{ textAlign: "center", marginBottom: 4 }}>
-              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 20, letterSpacing: 2, color: C.accent,
-                textShadow: "0 0 12px rgba(57,217,122,0.5)" }}>CIPHERFORGE</span>
+              <h1 style={{ margin: 0, fontFamily: "'Orbitron', sans-serif", fontSize: 20, fontWeight: 600, letterSpacing: 2, color: C.accent,
+                textShadow: "0 0 12px rgba(57,217,122,0.5)" }}>CIPHERFORGE</h1>
             </div>
             <p style={{ fontSize: 10.5, color: C.mute, textAlign: "center", margin: "2px 0 18px", letterSpacing: 0.5 }}>
               PASSWORD GENERATOR // STRENGTH ANALYSIS

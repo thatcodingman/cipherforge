@@ -1,8 +1,13 @@
-import { C, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, LegalHeader, LegalP, LegalH2 } from "../components/CipherChrome";
+import { C, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, LegalHeader, LegalP, LegalH2, PageMeta } from "../components/CipherChrome";
 
 export default function Terms() {
   return (
     <CipherBackdrop>
+      <PageMeta
+        title="Terms of Use | CipherForge"
+        description="Terms of use for CipherForge's free browser-based security tools: password generator, cipher playground, Breach, and Memory Ladder."
+        path="/terms"
+      />
       <CipherFonts />
       <CipherFrameStyles />
       <div className="cf-frame" style={{

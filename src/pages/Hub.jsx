@@ -1,6 +1,6 @@
-import { useState, useEffect, Component } from "react";
+import { useState, Component } from "react";
 import { Key, Shuffle, Brain, Zap, QrCode, ArrowRight } from "lucide-react";
-import { C, fontMono, CipherFonts, CipherStructuredData, CipherFrameStyles, CipherBackdrop, FrameFX, Mascot, BootSequence } from "../components/CipherChrome";
+import { C, fontMono, CipherFonts, CipherStructuredData, CipherFrameStyles, CipherBackdrop, FrameFX, Mascot, BootSequence, PageMeta } from "../components/CipherChrome";
 const ITEMS = [
   { key: "generator", icon: Key, title: "Password Generator", tag: "Free tool",
     desc: "Cryptographically secure passwords and a live strength scanner with real crack-time estimates.", href: "/generator" },
@@ -41,9 +41,13 @@ function HubInner() {
   const [booted, setBooted] = useState(false);
   const [hovered, setHovered] = useState(null);
 
-  useEffect(function () { document.title = "CipherForge — Security Tools"; }, []);
   return (
     <CipherBackdrop>
+      <PageMeta
+        title="CipherForge — Free Security Tools"
+        description="Free, browser-only security tools: a password generator with real crack-time analysis, a classic cipher playground, a QR/TOTP 2FA generator, a passphrase memory trainer, and a reflex defense game. No signup, nothing ever leaves your browser."
+        path="/"
+      />
       <CipherFonts />
       <CipherStructuredData />
       <CipherFrameStyles />
@@ -60,8 +64,8 @@ function HubInner() {
           <div style={{ position: "relative", zIndex: 1 }}>
             <Mascot />
             <div style={{ textAlign: "center", marginBottom: 8 }}>
-              <span style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 26, letterSpacing: 2, color: C.accent,
-                textShadow: "0 0 14px rgba(57,217,122,0.5)" }}>CIPHERFORGE</span>
+              <h1 style={{ margin: 0, fontFamily: "'Orbitron', sans-serif", fontSize: 26, fontWeight: 600, letterSpacing: 2, color: C.accent,
+                textShadow: "0 0 14px rgba(57,217,122,0.5)" }}>CIPHERFORGE</h1>
             </div>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, margin: "0 0 28px" }}>
               <span style={{ ...fontMono, fontSize: 10.5, color: C.accent, letterSpacing: 1, fontWeight: 700 }}>SECURE</span>

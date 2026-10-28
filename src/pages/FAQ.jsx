@@ -1,4 +1,4 @@
-import { C, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, LegalHeader, LegalP } from "../components/CipherChrome";
+import { C, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, LegalHeader, LegalP, PageMeta } from "../components/CipherChrome";
 
 const FAQS = [
   { q: "Is anything I type or generate sent to a server?", a: "No. Every tool on CipherForge — the password generator, cipher playground, memory trainer, and Breach — runs entirely in your browser. Nothing is transmitted anywhere." },
@@ -9,9 +9,29 @@ const FAQS = [
   { q: "Why are there no accounts or signup?", a: "Because none of these tools need one. Everything runs client-side, so there's nothing to store on our end that would require an account." },
 ];
 
+// Structured data for the FAQ page — eligible for a rich "FAQ" result in
+// Google search with the questions expandable directly on the results page.
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": FAQS.map(function (item) {
+    return {
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": { "@type": "Answer", "text": item.a },
+    };
+  }),
+};
+
 export default function FAQ() {
   return (
     <CipherBackdrop>
+      <PageMeta
+        title="FAQ | CipherForge"
+        description="Answers about CipherForge's free security tools: how the password generator works, whether the ciphers are secure, how crack-time estimates work, and more."
+        path="/faq"
+      />
+      <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       <CipherFonts />
       <CipherFrameStyles />
       <div className="cf-frame" style={{
@@ -26,7 +46,7 @@ export default function FAQ() {
           {FAQS.map(function (item) {
             return (
               <div key={item.q} style={{ marginBottom: 16 }}>
-                <p style={{ fontSize: 12.5, fontWeight: 700, color: C.text, margin: "0 0 5px" }}>{item.q}</p>
+                <h2 style={{ fontSize: 12.5, fontWeight: 700, color: C.text, margin: "0 0 5px" }}>{item.q}</h2>
                 <LegalP>{item.a}</LegalP>
               </div>
             );

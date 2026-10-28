@@ -1,8 +1,13 @@
-import { C, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, LegalHeader, LegalP } from "../components/CipherChrome";
+import { C, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, LegalHeader, LegalP, PageMeta } from "../components/CipherChrome";
 
 export default function Contact() {
   return (
     <CipherBackdrop>
+      <PageMeta
+        title="Contact | CipherForge"
+        description="Reach out to CipherForge with a bug report, feature idea, or question about any of our free browser-based security tools."
+        path="/contact"
+      />
       <CipherFonts />
       <CipherFrameStyles />
       <div className="cf-frame" style={{

@@ -1,8 +1,13 @@
-import { C, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, LegalHeader, LegalP, LegalH2 } from "../components/CipherChrome";
+import { C, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, LegalHeader, LegalP, LegalH2, PageMeta } from "../components/CipherChrome";
 
 export default function Privacy() {
   return (
     <CipherBackdrop>
+      <PageMeta
+        title="Privacy Policy | CipherForge"
+        description="CipherForge's privacy policy: no accounts, no tracking, no analytics. Everything you type into a CipherForge tool stays in your browser and is never sent anywhere."
+        path="/privacy"
+      />
       <CipherFonts />
       <CipherFrameStyles />
       <div className="cf-frame" style={{
