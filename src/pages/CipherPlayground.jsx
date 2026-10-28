@@ -1,6 +1,6 @@
 import { useState, useMemo, Component } from "react";
 import { ArrowLeft, Copy, Check } from "lucide-react";
-import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta } from "../components/CipherChrome";
+import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta, Breadcrumb } from "../components/CipherChrome";
 import StructuredData from "../components/StructuredData";
 
 const cipherPlaygroundSchema = {
@@ -145,7 +145,8 @@ function PlaygroundInner() {
         ) : (
         <div style={{ position: "relative", zIndex: 1, animation: "cpFadeUp 0.35s ease" }}>
           <style>{"@keyframes cpFadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }"}</style>
-          <a href="/" style={{ color: C.sub, textDecoration: "none", fontSize: 11, display: "inline-flex", alignItems: "center", gap: 5, marginBottom: 14 }}>
+          <Breadcrumb label="Cipher Playground" path="/cipher" />
+          <a href="/" style={{ color: C.sub, textDecoration: "none", fontSize: 11, display: "inline-flex", alignItems: "center", gap: 5, marginBottom: 14, marginTop: 4 }}>
             <ArrowLeft size={13} /> BACK
           </a>
 

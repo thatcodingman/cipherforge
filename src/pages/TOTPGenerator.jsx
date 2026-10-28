@@ -1,7 +1,7 @@
 import { useState, useEffect, Component } from "react";
 import QRCode from "qrcode";
 import { ArrowLeft, Copy, Check, RefreshCw } from "lucide-react";
-import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta } from "../components/CipherChrome";
+import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta, Breadcrumb } from "../components/CipherChrome";
 import StructuredData from "../components/StructuredData";
 
 const totpGeneratorSchema = {
@@ -173,7 +173,8 @@ function TOTPInner() {
             onDone={function () { setBooted(true); }} />
         ) : (
         <div style={{ position: "relative", zIndex: 1 }}>
-          <a href="/" style={{ color: C.sub, textDecoration: "none", fontSize: 11, display: "inline-flex", alignItems: "center", gap: 5, marginBottom: 14 }}>
+          <Breadcrumb label="QR / TOTP Generator" path="/totp" />
+          <a href="/" style={{ color: C.sub, textDecoration: "none", fontSize: 11, display: "inline-flex", alignItems: "center", gap: 5, marginBottom: 14, marginTop: 4 }}>
             <ArrowLeft size={13} /> BACK
           </a>
 

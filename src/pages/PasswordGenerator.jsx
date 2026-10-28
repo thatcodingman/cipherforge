@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useMemo, Component } from "react";
 import { Copy, Check, RefreshCw, Settings, X, Zap } from "lucide-react";
-import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta } from "../components/CipherChrome";
+import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta, Breadcrumb } from "../components/CipherChrome";
 import StructuredData from "../components/StructuredData";
 
 const passwordGeneratorSchema = {
@@ -229,7 +229,8 @@ function GeneratorInner() {
             onDone={function () { setBooted(true); }} />
         ) : (
           <div style={{ position: "relative", zIndex: 1 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+            <Breadcrumb label="Password Generator" path="/generator" />
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14, marginTop: 4 }}>
               <a href="/" style={{ color: C.sub, textDecoration: "none", fontSize: 11 }}>&lt; BACK</a>
               <button onClick={function () { setShowSettings(!showSettings); }} aria-label="Appearance and length settings" style={{
                 background: showSettings ? C.accentDark : "none", border: "1px solid " + (showSettings ? C.accent : C.border),

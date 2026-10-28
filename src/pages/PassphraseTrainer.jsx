@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Brain, Trophy, RefreshCw, Sparkles } from "lucide-react";
-import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta } from "../components/CipherChrome";
+import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta, Breadcrumb } from "../components/CipherChrome";
 import StructuredData from "../components/StructuredData";
 
 const passphraseTrainerSchema = {
@@ -191,7 +191,8 @@ export default function PassphraseTrainer() {
             onDone={function () { setBooted(true); }} />
         ) : (
         <div style={{ position: "relative", zIndex: 1, animation: "ptFadeUp 0.35s ease" }}>
-          <a href="/" style={{ color: C.sub, textDecoration: "none", fontSize: 11, display: "inline-flex", alignItems: "center", gap: 5, marginBottom: 12 }}>
+          <Breadcrumb label="Memory Ladder" path="/memory" />
+          <a href="/" style={{ color: C.sub, textDecoration: "none", fontSize: 11, display: "inline-flex", alignItems: "center", gap: 5, marginBottom: 12, marginTop: 4 }}>
             <ArrowLeft size={13} /> BACK
           </a>
 

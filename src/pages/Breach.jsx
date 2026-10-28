@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowLeft, Zap, Shield, Trophy } from "lucide-react";
-import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta } from "../components/CipherChrome";
+import { C, fontMono, CipherFonts, CipherFrameStyles, CipherBackdrop, FrameFX, BootSequence, PageMeta, Breadcrumb } from "../components/CipherChrome";
 import StructuredData from "../components/StructuredData";
 
 const breachGameSchema = {
@@ -227,7 +227,8 @@ export default function Breach() {
             onDone={function () { setBooted(true); }} />
         ) : (
         <div style={{ position: "relative", zIndex: 1, animation: "brFadeUp 0.35s ease" }}>
-          <a href="/" style={{ color: C.sub, textDecoration: "none", fontSize: 11, display: "inline-flex", alignItems: "center", gap: 5, marginBottom: 12 }}>
+          <Breadcrumb label="Breach" path="/breach" />
+          <a href="/" style={{ color: C.sub, textDecoration: "none", fontSize: 11, display: "inline-flex", alignItems: "center", gap: 5, marginBottom: 12, marginTop: 4 }}>
             <ArrowLeft size={13} /> BACK
           </a>
 

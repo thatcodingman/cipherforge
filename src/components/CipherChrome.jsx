@@ -74,6 +74,32 @@ export function PageMeta({ title, description, path, noindex }) {
   return null;
 }
 
+// Breadcrumb trail for the tool pages — emits BreadcrumbList JSON-LD so
+// Google can show "getcipherforge.com > Cipher Playground" in search
+// results instead of a bare URL, plus a small visible trail on the page
+// itself (a second, clearer way back than the existing BACK link alone).
+// label is the current page's name; path is its route (e.g. "/cipher").
+export function Breadcrumb({ label, path }) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "CipherForge", "item": SITE + "/" },
+      { "@type": "ListItem", "position": 2, "name": label, "item": SITE + path },
+    ],
+  };
+  return (
+    <>
+      <script type="application/ld+json">{JSON.stringify(data)}</script>
+      <nav aria-label="Breadcrumb" style={{ fontSize: 10, color: C.mute, marginBottom: 2 }}>
+        <a href="/" style={{ color: C.mute, textDecoration: "none" }}>CipherForge</a>
+        <span style={{ margin: "0 5px" }}>/</span>
+        <span style={{ color: C.sub }}>{label}</span>
+      </nav>
+    </>
+  );
+}
+
 // Shared CSS for the frame + shared keyframes. Include once per page via <CipherFrameStyles />.
 export function CipherFrameStyles() {
   return (
@@ -125,7 +151,10 @@ export function CipherBackdrop({ children }) {
       background: "#000000",
       padding: "16px 0",
     }}>
-      {children}
+      {/* display:contents keeps this invisible to layout — cf-frame stays
+          the direct flex item being centered — while giving every page a
+          real <main> landmark for screen readers and crawlers. */}
+      <main style={{ display: "contents" }}>{children}</main>
     </div>
   );
 }

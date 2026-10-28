@@ -102,7 +102,7 @@ function HubInner() {
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                        <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: 0.3 }}>{item.title}</span>
+                        <h2 style={{ margin: 0, fontSize: 14, fontWeight: 700, letterSpacing: 0.3, color: "inherit" }}>{item.title}</h2>
                         <span style={{ fontSize: 9, color: item.featured ? C.accent : C.mute, textTransform: "uppercase",
                           letterSpacing: 0.5, border: "1px solid " + (item.featured ? C.accent : C.border), borderRadius: 4, padding: "1px 5px" }}>
                           {item.tag}
